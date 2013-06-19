@@ -23,32 +23,38 @@ def parse_for_artist_name(string)
 end
 
 def find_artist(artist_name)
-  count = 0
-  Artist.all.each do |art| 
-    count += 1
-    art.name == parse_for_artist_name(artist_name)
-  end  
-  return Artist.all[count]
+  Artist.all.select { |art| 
+    art.name == parse_for_artist_name(artist_name)}[0] 
 end
 
-big_array = Dir.entries("./data/.")
+def find_genre(genre_string)
+  Genre.all.select { |genre_object| 
+    genre_object.name == genre_string
+  }
+
+end
+
+big_array = Dir.entries("data")
 big_array = big_array.slice(2, big_array.length)
 
 def parse_strings(array)
   array.each do |string|
     if Artist.all.any? {|artist| artist.name == parse_for_artist_name(string)} 
-      
-      count = 0
 
       artist = find_artist(parse_for_artist_name(string))
       
       song = Song.new
       song.name = parse_song_for_name(string)
-      
-      genre_object = Genre.new
-      genre_object.name = parse_song_for_genre(string)
-      song.genre = genre_object
-      
+    
+      # if find_genre(parse_song_for_genre(string))
+      #   puts find_genre(parse_song_for_genre(string))
+      #   find_genre(parse_song_for_genre(string))[0].songs << song
+      # else
+        genre_object = Genre.new
+        genre_object.name = parse_song_for_genre(string)
+        song.genre = genre_object
+      # end
+
       artist.add_song(song)
 
     else
@@ -65,17 +71,15 @@ def parse_strings(array)
       song.genre = genre_object
       
       artist.add_song(song)
-
-      puts artist.name
-      puts artist.songs[0].name
-      puts artist.genres
     end
+    # puts "#{artist.name} + #{artist.songs.size} + #{artist.genres.size}"
   end
 end
 
+
 parse_strings(big_array)
 
-binding.pry
+# binding.pry
 
 
 # pseudo code

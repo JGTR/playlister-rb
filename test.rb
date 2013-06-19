@@ -1,7 +1,6 @@
-load "genres.rb"
 load "artist.rb"
 load "songs.rb"
-load "parser.rb"
+load "genres.rb"
 
 def test(title, &b)
   begin
@@ -45,8 +44,6 @@ end
 
 
 
-
-parse_strings
 
 # Artist Specs
 test 'Can initialize an Artist' do

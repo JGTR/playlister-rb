@@ -2,12 +2,10 @@ class Artist
   attr_accessor :name, :songs, :genres
   ARTISTS = [] # try using a constant => ARTIST_LIST
 
-  def self.count_up(artist_instance)
-    ARTISTS << artist_instance
-  end
-
   def initialize
-    Artist.count_up(self)
+    ARTISTS << self
+    @songs = []
+    @genres = []
   end
 
   def self.count
@@ -22,14 +20,15 @@ class Artist
     ARTISTS.clear
   end
 
+  reset_artists
+
   def songs_count
     @songs.count
   end
 
   def add_song(song_instance)
-    @songs = []
     @songs << song_instance
-    @genres = []
+    song_instance.artist = self
     @genres << song_instance.genre
   end
 

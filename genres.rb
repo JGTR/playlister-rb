@@ -5,6 +5,7 @@ class Genre
   
   def initialize
     GENRELIST << self
+    @songs = []
   end
 
   def self.all

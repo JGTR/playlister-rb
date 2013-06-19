@@ -1,5 +1,5 @@
 class Song
-  attr_accessor :name, :genre
+  attr_accessor :name, :genre, :artist
   SONGS = []
 
   def initialize
@@ -12,6 +12,11 @@ class Song
 
   def self.reset_songs
     SONGS.clear
+  end
+
+  def genre=(genre)
+    @genre = genre
+    genre.songs << self
   end
 
 end
