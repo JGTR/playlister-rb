@@ -15,8 +15,8 @@ def parse_song_for_genre(string)
   string.split(" - ")[1].split("[").last.split("]").first.strip
 end
 
-def parse_song_for_artist(string)
-end
+# def parse_song_for_artist(string)
+# end
 
 def parse_for_artist_name(string)
   string.split(" - ")[0].strip
@@ -76,23 +76,5 @@ def parse_strings(array)
   end
 end
 
-
+binding.pry
 parse_strings(big_array)
-
-# binding.pry
-
-
-# pseudo code
-
-# big big_array
-
-#one loop
-# check if Arist exists in Artist class
-  # if not, Artist is new, do the following:
-    # Create new Artist and associate Genre and associate songs
-  # if Artist is not new,
-    # Associate Genre and Song ( but dont create new Artist)
-
-  # end
-
-  # => Unique artists, genres, and songs already associated

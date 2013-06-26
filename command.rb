@@ -4,10 +4,29 @@ load "genres.rb"
 load "parser.rb"
 require "pry"
 
+module Listable
+
+  module InstanceMethods
+   def initialize
+    self.class.all << self
+   end
+  end
+
+  module ClassMethods
+    def list
+      self.all.each_with_index do |index, value|
+        puts "#{index}. #{value}"
+      end
+    end
+  end
+end
+
 # jukebox.rb
 
 class Jukebox
   attr_accessor :songs
+  extend Listable::ClassMethods
+  include Listable::InstanceMethods
 
   def initialize
     # @songs = songs
@@ -35,7 +54,7 @@ class Jukebox
 
   def helpme
     puts "Welcome to jukebox."
-    puts "Do you want to browse by Artist or Genre?"
+    puts "I respond to browse by Artist or Genre?"
   end
 end
 
@@ -47,10 +66,23 @@ jukebox = Jukebox.new
 jukebox_on = true
 entry = 0
 
-while jukebox_on 
+while entry != "exit"
   jukebox.helpme
   entry = gets.strip.downcase
   case entry
+    when "help"
+      jukebox.helpme
+    when /browse/
+      puts "You are browsing"
+      command = entry.split.last.downcase.strip
+      case command
+        when "artists"
+          Artist.list
+        when "genres"
+          Genres.list
+        when "songs"
+          Songs.list 
+      end
     when "artist"
       #print out Artists
       Artist.all.each_with_index do |artist, index|
@@ -70,16 +102,3 @@ while jukebox_on
   end
 end
 
-
-  # case entry
-  #   when "list"
-  #     jukebox.list
-  #   when "play"
-  #     jukebox.play
-  #   when "help"
-  #     jukebox.helpme
-  #   when "exit"
-  #     jukebox_on = false
-  #   else
-  #     jukebox.helpme
-  # end
